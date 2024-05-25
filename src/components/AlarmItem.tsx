@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     alarmItem: {
-        height: 50,
-        width: "100%",
+        height: 100,
         flexDirection: "column",
         backgroundColor: "#66C3FF",
         padding: 10,
         marginBottom: 10,
+        marginHorizontal: 10,
         borderRadius: 10,
     }
 });

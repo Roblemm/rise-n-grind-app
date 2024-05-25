@@ -1,14 +1,9 @@
 import { FlatList, Pressable, StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { alarms } from '@assets/Alarms';
 import AlarmItem from '@/components/AlarmItem';
 
-const alarms = [
-  { time: "7:30", meridiem: 'AM', id: 1 },
-  { time: "3:30", meridiem: 'PM', id: 2 },
-  { time: "8:45", meridiem: 'PM', id: 3 },
-]
+
 
 
 export default function AlarmsScreen() {
