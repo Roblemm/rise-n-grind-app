@@ -1,5 +1,5 @@
-export type Alarm = {
+export type AlarmItem = {
+    time: Date,
+    active: boolean,
     id: number,
-    time: string,
-    meridiem: string,
 }

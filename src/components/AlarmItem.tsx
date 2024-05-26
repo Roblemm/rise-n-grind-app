@@ -1,17 +1,20 @@
 import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
-import { Alarm } from '@/types';
+import { AlarmItem as AlarmItemType } from '@/types';
 
 type AlarmItemProps = {
-    alarm: Alarm;
+    alarm: AlarmItemType;
 }
 
 export default function AlarmItem({ alarm } : AlarmItemProps) {
     return (
     <Link href={`/alarms/${alarm.id}`} asChild>
         <Pressable style={styles.alarmItem}>
-            <Text>{alarm.time} <Text>{alarm.meridiem}</Text></Text>
+            <Text>{alarm.time.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+            })}</Text>
         </Pressable>
     </Link>
     

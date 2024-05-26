@@ -6,21 +6,23 @@ import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
+import { useAlarmList } from '@/providers/AlarmListProvider';
 
 
 export default function AlarmsScreen() {
+  const { items } = useAlarmList();
+
   return (
     <View style={styles.container}>
       <FlatList style={styles.container}
-        data={alarms}
+        data={items}
         renderItem={({ item }) => {
           return (<AlarmItem alarm={item} />)
         }}
       />
       <Link href={'/alarms/addAlarm'} asChild>
         <Pressable style={styles.addButton}>
-            <MaterialCommunityIcons name="clock-plus-outline" size={50} color="white" />
+          <MaterialCommunityIcons name="clock-plus-outline" size={50} color="white" />
         </Pressable>
       </Link>
 
@@ -38,13 +40,15 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: 'lime',
-    borderRadius: 75/2,
+    borderRadius: 75 / 2,
     width: 75,
     height: 75,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-end',
     margin: 10,
-
+    position: "absolute",
+    bottom: 0,
+    right: 0,
   }
 });

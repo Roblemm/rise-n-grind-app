@@ -1,13 +1,31 @@
-import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Stack } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { Stack, useRouter } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAlarmList } from '@/providers/AlarmListProvider';
+import { AlarmItem } from '@/types';
+
 
 const addAlarm = () => {
-    const [alarmTime, setAlarmTime] = useState(new Date(new Date().getTime() + 60000));
+    const router = useRouter();
 
+
+    const [alarmTime, setAlarmTime] = useState(new Date(new Date().getTime() + 60000));
+    const { items, addItem } = useAlarmList();
     const [showTimePicker, setShowTimePicker] = useState(false);
+
+    const addAlarmToList = () => {
+        const alarmItem: AlarmItem = {
+            id: items.length + 1,
+            time: alarmTime,
+            active: true
+        }
+
+        addItem(alarmItem);
+        
+        router.push("/alarms");
+    };
 
     const showTimePickerModal = () => {
         setShowTimePicker(true);
@@ -40,7 +58,7 @@ const addAlarm = () => {
                     <FontAwesome5 name="edit" size={30} color="#2c3e50" />
                 </Pressable>
             </View>
-            <Pressable style={styles.addButton}>
+            <Pressable style={styles.addButton} onPress={addAlarmToList}>
                 <MaterialCommunityIcons name="check" size={50} color="white" />
             </Pressable>
 
