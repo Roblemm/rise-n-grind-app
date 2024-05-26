@@ -1,10 +1,11 @@
-import { Alert, Button, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Stack } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const addAlarm = () => {
-    const [alarmTime, setAlarmTime] = useState(new Date());
+    const [alarmTime, setAlarmTime] = useState(new Date(new Date().getTime() + 60000));
 
     const [showTimePicker, setShowTimePicker] = useState(false);
 
@@ -23,25 +24,6 @@ const addAlarm = () => {
         }
     };
 
-    useEffect(() => {
-        const checkAlarm = setInterval(() => {
-            const currentTime = new Date();
-            if (
-                currentTime.getHours() === alarmTime.getHours() &&
-                currentTime.getMinutes() === alarmTime.getMinutes()
-            ) {
-                // Matched the set alarm time, show an alert
-                Alert.alert("Alarm", "It is time!");
-                // Stop checking once the alert is shown
-                clearInterval(checkAlarm);
-            }
-        }, 1000); // Check every second
-
-        // Cleanup on component unmount
-        return () => clearInterval(checkAlarm);
-
-    }, [alarmTime]);
-
 
     return (
         <View style={styles.container}>
@@ -54,23 +36,23 @@ const addAlarm = () => {
                         minute: "2-digit",
                     })}
                 </Text>
+                <Pressable onPress={showTimePickerModal}>
+                    <FontAwesome5 name="edit" size={30} color="#2c3e50" />
+                </Pressable>
             </View>
+            <Pressable style={styles.addButton}>
+                <MaterialCommunityIcons name="check" size={50} color="white" />
+            </Pressable>
 
             {showTimePicker && (
                 <DateTimePicker
                     value={alarmTime}
                     mode="time"
-                    is24Hour={true}
                     display="spinner"
                     onChange={handleTimeChange}
                 />
             )}
 
-            <Button
-                title="Set Alarm"
-                onPress={showTimePickerModal}
-                color="#3498db"
-            />
 
         </View>
     );
@@ -93,6 +75,19 @@ const styles = StyleSheet.create({
         marginRight: 10,
         color: "#2c3e50", // Set your desired text color
     },
+    addButton: {
+        backgroundColor: 'lime',
+        borderRadius: 75/2,
+        width: 75,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+        margin: 10,
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+      }
     // title: {
     //     fontWeight: '900',
     //     fontSize: 40,
