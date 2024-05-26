@@ -33,6 +33,7 @@ export default function TabLayout() {
         name="alarms"
         options={{
           title: 'Alarms',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="clock-o" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>

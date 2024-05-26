@@ -1,7 +1,7 @@
 import { View, Text } from "@/components/Themed";
 import { Alarm } from "@/types";
 import { alarms } from "@assets/Alarms";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 
 export default function AlarmPage() {
@@ -17,6 +17,7 @@ export default function AlarmPage() {
     }
     return (
         <View>
+            <Stack.Screen options={{title: "Details"}} />
             <Text>Alarm: {itemInfo.time} {itemInfo.meridiem}, ID: {itemInfo.id}</Text>
         </View>
         
