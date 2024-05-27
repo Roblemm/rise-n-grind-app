@@ -33,6 +33,33 @@ export class AlarmClass {
         return `${hour}:${this.minute < 10? "0" : ""}${this.minute} ${this.hour >= 12? "PM" : "AM"}`;
     }
 
+    getAlarmRepeats() : string {
+        let repeats = "";
+        this.repeat.forEach(repeat => {
+            repeats += AlarmClass.dayToShort(repeat) + ", ";
+        });
+        repeats = repeats.slice(0, repeats.length - 2);
+        return repeats;
+    }
+
+    static dayToShort(day: RepeatDay): string {
+        switch(day) {
+            case "Sunday":
+                return "Sun";
+            case "Monday":
+                return "Mon";
+            case "Tuesday":
+                return "Tue";
+            case "Wednesday":
+                return "Wed";
+            case "Thursday":
+                return "Thu";
+            case "Friday":
+                return "Fri";
+            case "None":
+                return "One Time";
+        }
+    }
 
     toJSON(): any {
         return {

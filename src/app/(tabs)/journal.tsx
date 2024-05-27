@@ -11,7 +11,6 @@ export default function TabTwoScreen() {
       <Text style={styles.title}>
         This is where Journal Entries will be made
       </Text>
-      {/* <EditScreenInfo path="app/(tabs)/two.tsx" /> */}
     </View>
   );
 }

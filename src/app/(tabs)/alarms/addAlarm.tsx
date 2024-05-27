@@ -6,6 +6,8 @@ import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAlarmList } from '@/providers/AlarmListProvider';
 
 import { AlarmClass } from '@/utils/AlarmClass';
+import { globalStyles } from '@/components/Styles';
+import Colors from '@/constants/Colors';
 
 const addAlarm = () => {
     const router = useRouter();
@@ -42,7 +44,7 @@ const addAlarm = () => {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: "Create New Alarm" }} />
+            <Stack.Screen options={{ title: "Create New Alarm", headerStyle: globalStyles.barColor }} />
 
             <View style={styles.clockContainer}>
                 <Text style={styles.clockText}>
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
         color: "#2c3e50", // Set your desired text color
     },
     addButton: {
-        backgroundColor: 'lime',
+        backgroundColor: Colors.light.foreground,
         borderRadius: 75 / 2,
         width: 75,
         height: 75,

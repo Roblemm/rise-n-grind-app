@@ -11,6 +11,7 @@ import db from '@react-native-firebase/database';
 import { useEffect } from 'react';
 import { useLogin } from '@/providers/LoginProvider';
 import { AlarmClass } from '@/utils/AlarmClass';
+import Colors from '@/constants/Colors';
 
 export default function AlarmsScreen() {
   const { items } = useAlarmList();
@@ -50,7 +51,7 @@ export default function AlarmsScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList style={styles.container}
+      <FlatList style={[styles.container, styles.alarmList]}
         data={items}
         renderItem={({ item }) => {
           return (<AlarmItem alarm={item} />)
@@ -72,10 +73,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   alarmList: {
-    flex: 1
+    marginTop: 10,
   },
   addButton: {
-    backgroundColor: 'lime',
+    backgroundColor: Colors.light.foreground,
     borderRadius: 75 / 2,
     width: 75,
     height: 75,
