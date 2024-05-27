@@ -23,7 +23,7 @@ const AlarmListProvider = ({ children }: PropsWithChildren) => {
     const [items, setItems] = useState<AlarmItem[]>(alarms);
 
     const addItem = (item: AlarmItem) => {
-        setItems([...items, item]);
+        setItems([item, ...items]);
     };
     return (
         <AlarmListContext.Provider value={{items, addItem}}>

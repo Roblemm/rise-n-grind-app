@@ -6,6 +6,8 @@ import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAlarmList } from '@/providers/AlarmListProvider';
 import { AlarmItem } from '@/types';
 
+import auth from "@react-native-firebase/auth";
+import db from '@react-native-firebase/database';
 
 const addAlarm = () => {
     const router = useRouter();
@@ -15,6 +17,27 @@ const addAlarm = () => {
     const { items, addItem } = useAlarmList();
     const [showTimePicker, setShowTimePicker] = useState(false);
 
+
+    const addAlarm = async () => {
+        try {
+            const response = await auth().signInWithEmailAndPassword("testuser@risengrind.com", "grinditout");
+            // Create user info if user does not exist
+            const userRef = db().ref(`users/${response.user.uid}`);
+            const snapshot = await userRef.once("value");
+            if (snapshot.exists()) {
+                // User does not exist, create user info
+                await userRef.set({
+                    curTime: new Date().getTime(),
+                    alarms: items,
+                });
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
     const addAlarmToList = () => {
         const alarmItem: AlarmItem = {
             id: items.length + 1,
@@ -23,7 +46,9 @@ const addAlarm = () => {
         }
 
         addItem(alarmItem);
-        
+
+        addAlarm();
+
         router.push("/alarms");
     };
 
@@ -95,7 +120,7 @@ const styles = StyleSheet.create({
     },
     addButton: {
         backgroundColor: 'lime',
-        borderRadius: 75/2,
+        borderRadius: 75 / 2,
         width: 75,
         height: 75,
         justifyContent: 'center',
@@ -105,7 +130,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         right: 0,
-      }
+    }
     // title: {
     //     fontWeight: '900',
     //     fontSize: 40,
