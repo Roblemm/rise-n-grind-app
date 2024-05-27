@@ -1,5 +1,1 @@
-export type AlarmItem = {
-    time: Date,
-    active: boolean,
-    id: number,
-}
+export type RepeatDay = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'None';

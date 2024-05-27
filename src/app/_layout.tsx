@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@components/useColorScheme';
 import AlarmListProvider from '@/providers/AlarmListProvider';
+import LoginProvider from '@/providers/LoginProvider';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,12 +52,18 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+
       <AlarmListProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
+        <LoginProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </LoginProvider>
+
+
       </AlarmListProvider>
+
+
 
     </ThemeProvider>
   );

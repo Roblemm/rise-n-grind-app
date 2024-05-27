@@ -1,6 +1,6 @@
 import { View, Text } from "@/components/Themed";
 import { useAlarmList } from "@/providers/AlarmListProvider";
-import { AlarmItem } from "@/types";
+import { AlarmClass } from "@/utils/AlarmClass";
 import { Stack, useLocalSearchParams } from "expo-router";
 
 
@@ -17,7 +17,7 @@ export default function AlarmPage() {
         );
     }
 
-    const itemInfo: AlarmItem | undefined = items.find((a) => { return a.id.toString() == id });
+    const itemInfo: AlarmClass | undefined = items.find((a) => { return a.id.toString() == id });
     if (!itemInfo) {
         return (
             <View>
@@ -29,10 +29,7 @@ export default function AlarmPage() {
     return (
         <View>
             <Stack.Screen options={{ title: "Details" }} />
-            <Text>Alarm: {itemInfo.time.toLocaleTimeString([],{
-                hour: '2-digit',
-                minute: '2-digit'
-            })}, ID: {itemInfo.id}</Text>
+            <Text>Alarm: {itemInfo.get12HourTime()}, ID: {itemInfo.id}, Active: {itemInfo.active}, Repeats: {itemInfo.repeat.join()}</Text>
         </View>
 
     );

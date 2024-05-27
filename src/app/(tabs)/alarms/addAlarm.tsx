@@ -4,50 +4,22 @@ import { Stack, useRouter } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAlarmList } from '@/providers/AlarmListProvider';
-import { AlarmItem } from '@/types';
 
-import auth from "@react-native-firebase/auth";
-import db from '@react-native-firebase/database';
+import { AlarmClass } from '@/utils/AlarmClass';
 
 const addAlarm = () => {
     const router = useRouter();
 
 
     const [alarmTime, setAlarmTime] = useState(new Date(new Date().getTime() + 60000));
-    const { items, addItem } = useAlarmList();
+    const { addItem } = useAlarmList();
     const [showTimePicker, setShowTimePicker] = useState(false);
 
 
-    const addAlarm = async () => {
-        try {
-            const response = await auth().signInWithEmailAndPassword("testuser@risengrind.com", "grinditout");
-            // Create user info if user does not exist
-            const userRef = db().ref(`users/${response.user.uid}`);
-            const snapshot = await userRef.once("value");
-            if (snapshot.exists()) {
-                // User does not exist, create user info
-                await userRef.set({
-                    curTime: new Date().getTime(),
-                    alarms: items,
-                });
-            }
-
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-
     const addAlarmToList = () => {
-        const alarmItem: AlarmItem = {
-            id: items.length + 1,
-            time: alarmTime,
-            active: true
-        }
+        const alarmItem: AlarmClass = new AlarmClass(alarmTime.getHours(), alarmTime.getMinutes());
 
         addItem(alarmItem);
-
-        addAlarm();
 
         router.push("/alarms");
     };

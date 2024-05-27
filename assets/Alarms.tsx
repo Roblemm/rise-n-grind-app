@@ -1,5 +1,7 @@
-import { AlarmItem } from "@/types";
+import { AlarmClass } from "@/utils/AlarmClass";
 
-export const alarms: AlarmItem[] = [
-    { time: new Date(), id: 1, active: true },
+const timeInTwo = new Date(new Date().getTime() + 60*1000*2);
+
+export const alarms: AlarmClass[] = [
+    new AlarmClass(timeInTwo.getHours(), timeInTwo.getMinutes())
   ]

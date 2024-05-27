@@ -6,35 +6,47 @@ import { Link } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useAlarmList } from '@/providers/AlarmListProvider';
-
 import auth from "@react-native-firebase/auth";
 import db from '@react-native-firebase/database';
+import { useEffect } from 'react';
+import { useLogin } from '@/providers/LoginProvider';
+import { AlarmClass } from '@/utils/AlarmClass';
 
 export default function AlarmsScreen() {
   const { items } = useAlarmList();
+  const { getLoggedIn, getUser } = useLogin();
 
 
-  const login = async () => {
-    try {
-      const response = await auth().signInWithEmailAndPassword("testuser@risengrind.com", "grinditout");
-      // Create user info if user does not exist
-      const userRef = db().ref(`users/${response.user.uid}`);
-      const snapshot = await userRef.once("value");
-      if (!snapshot.exists()) {
-        // User does not exist, create user info
-        await userRef.set({
-          curTime: new Date().getTime(),
-          alarms: items,
-        });
+  console.log("Attaching UseEffect to Main Page");
+  useEffect(() => {
+    const addAlarmToFirebase = async () => {
+      try {
+        const user = getUser();
+
+        console.log("User: " + user)
+        console.log("Logged In: " + getLoggedIn())
+
+        if (getLoggedIn() && user) {
+          const userRef = db().ref(`users/${user.uid}`);
+          const snapshot = await userRef.once("value");
+          if (snapshot.exists()) {
+            // User does not exist, create user info
+            await userRef.set({
+              curTime: new Date().getTime(),
+              alarms: AlarmClass.convertAlarmsToJSON(items),
+            });
+          }
+
+        }
+      } catch (e) {
+        console.log(e);
       }
+    };
 
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  login();
-
+    console.log("Alarms Changed, Updating");
+    console.log(items);
+    addAlarmToFirebase();
+  }, [items]); // Add items as a dependency
 
   return (
     <View style={styles.container}>
