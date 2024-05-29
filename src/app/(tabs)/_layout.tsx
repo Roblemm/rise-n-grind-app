@@ -26,7 +26,6 @@ export default function TabLayout() {
         tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
         tabBarStyle: globalStyles.barColor,
         headerStyle: globalStyles.barColor,
-
         headerTitleStyle: {
           fontWeight: 'bold',
           color: "white",
