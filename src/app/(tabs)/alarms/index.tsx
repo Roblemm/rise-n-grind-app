@@ -17,7 +17,7 @@ import Colors from '@/constants/Colors';
 TODO:
 
 x Delete Alarm
-o Make Toggle Work
+x Make Toggle Work
 o Edit Alarm
 o Add Splashscreen
 

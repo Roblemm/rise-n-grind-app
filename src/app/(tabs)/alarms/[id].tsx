@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#66C3FF",
         padding: 10,
-        marginBottom: 10,
-        marginHorizontal: 10,
+        margin: 10,
         borderRadius: 10,
     },
     alarmRepeatsText: {

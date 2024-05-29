@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { Stack, useRouter } from 'expo-router';
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { useAlarmList } from '@/providers/AlarmListProvider';
 
 import { AlarmClass } from '@/utils/AlarmClass';
@@ -23,7 +23,7 @@ const addAlarm = () => {
 
         addItem(alarmItem);
 
-        router.push("/alarms");
+        router.back();
     };
 
     const showTimePickerModal = () => {
@@ -40,37 +40,38 @@ const addAlarm = () => {
             setAlarmTime(selectedTime);
         }
     };
-
-
+    
     return (
-        <View style={styles.container}>
-            <Stack.Screen options={{ title: "Create New Alarm" }} />
+        <View style={styles.expand}>
+            <View style={styles.container}>
+                <Stack.Screen options={{ title: "Create New Alarm" }} />
 
-            <View style={styles.clockContainer}>
-                <Text style={styles.clockText}>
-                    {alarmTime.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                    })}
-                </Text>
-                <Pressable onPress={showTimePickerModal}>
-                    <FontAwesome5 name="edit" size={30} color="#2c3e50" />
+                <View style={styles.clockContainer}>
+                    <Text style={styles.clockText}>
+                        {alarmTime.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}
+                    </Text>
+                    <Pressable style={styles.editButton} onPress={showTimePickerModal}>
+                        <Feather name="edit-2" size={30} color="white" />
+                    </Pressable>
+                </View>
+                <Pressable style={styles.addButton} onPress={addAlarmToList}>
+                    <MaterialCommunityIcons name="check" size={50} color="white" />
                 </Pressable>
+
+                {showTimePicker && (
+                    <DateTimePicker
+                        value={alarmTime}
+                        mode="time"
+                        display="spinner"
+                        onChange={handleTimeChange}
+                    />
+                )}
+
+
             </View>
-            <Pressable style={styles.addButton} onPress={addAlarmToList}>
-                <MaterialCommunityIcons name="check" size={50} color="white" />
-            </Pressable>
-
-            {showTimePicker && (
-                <DateTimePicker
-                    value={alarmTime}
-                    mode="time"
-                    display="spinner"
-                    onChange={handleTimeChange}
-                />
-            )}
-
-
         </View>
     );
 }
@@ -78,19 +79,29 @@ const addAlarm = () => {
 export default addAlarm
 
 const styles = StyleSheet.create({
-    container: {
+    expand: {
         flex: 1,
-        alignItems: 'center',
+        backgroundColor: Colors.light.background,
     },
     clockContainer: {
         flexDirection: "row",
         alignItems: "center",
         marginBottom: 20,
     },
+    container: {
+        flex: 1,
+        backgroundColor: "#66C3FF",
+        padding: 10,
+        margin: 10,
+        borderRadius: 10,
+        alignItems: "center",
+    },
     clockText: {
         fontSize: 50,
-        marginRight: 10,
-        color: "#2c3e50", // Set your desired text color
+        fontWeight: "bold",
+        color: Colors.light.background2,
+        alignSelf: "center",
+        marginRight: 20,
     },
     addButton: {
         backgroundColor: Colors.light.foreground,
@@ -104,6 +115,16 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         right: 0,
+    },
+    editButton: {
+        backgroundColor: Colors.light.foreground2,
+        borderRadius: 50 / 2,
+        borderColor: Colors.light.foreground,
+        borderWidth: 5,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
     // title: {
     //     fontWeight: '900',
