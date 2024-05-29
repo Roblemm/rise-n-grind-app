@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         color: Colors.light.background,
     },
     alarmRepeatsTextToggled: {
-        color: Colors.light.tabIconDefault,
+        color: Colors.light.deselected,
     },
     alarmText: {
         fontSize: 50,

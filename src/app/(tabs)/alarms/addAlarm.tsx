@@ -44,7 +44,7 @@ const addAlarm = () => {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: "Create New Alarm", headerStyle: globalStyles.barColor }} />
+            <Stack.Screen options={{ title: "Create New Alarm" }} />
 
             <View style={styles.clockContainer}>
                 <Text style={styles.clockText}>

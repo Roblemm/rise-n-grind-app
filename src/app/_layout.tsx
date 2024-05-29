@@ -55,7 +55,12 @@ function RootLayoutNav() {
 
       <AlarmListProvider>
         <LoginProvider>
-          <Stack >
+          <Stack screenOptions={{
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: "white",
+            },
+          }}>
             <Stack.Screen name="(tabs)" options={{
                headerShown: false,
                

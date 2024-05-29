@@ -13,6 +13,34 @@ import { useLogin } from '@/providers/LoginProvider';
 import { AlarmClass } from '@/utils/AlarmClass';
 import Colors from '@/constants/Colors';
 
+
+/*
+TODO:
+
+o Delete Alarm
+o Make Toggle Work
+o Edit Alarm
+o Add Splashscreen
+
+o Add Alert on Phone when Alarm goes off & Toggle if One Time Alarm
+o Add Next Alarm in (time)
+
+
+
+o Clean up Add Alarm Page
+  o Add Selecting Ringtone
+  o Make Default Repeat Everyday
+  o Make Cases for if its Weekdays or Everyday
+  o Add Repeats?
+
+Do something impressive.
+- Edit Volume from Phone
+- Add Missions
+- Add Journal
+
+
+
+*/
 export default function AlarmsScreen() {
   const { items } = useAlarmList();
   const { getLoggedIn, getUser } = useLogin();

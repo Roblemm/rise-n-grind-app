@@ -12,7 +12,7 @@ export default function AlarmPage() {
     if (!id) {
         return (
             <View>
-                <Stack.Screen options={{ title: "Details", headerStyle: globalStyles.barColor }} />
+                <Stack.Screen options={{ title: "Details" }} />
                 <Text>No Alarm Id</Text>
             </View>
         );
@@ -22,14 +22,14 @@ export default function AlarmPage() {
     if (!itemInfo) {
         return (
             <View>
-                <Stack.Screen options={{ title: "Details", headerStyle: globalStyles.barColor }} />
+                <Stack.Screen options={{ title: "Details" }} />
                 <Text>Alarm Not Found</Text>
             </View>
         );
     }
     return (
         <View>
-            <Stack.Screen options={{ title: "Details", headerStyle: globalStyles.barColor }} />
+            <Stack.Screen options={{ title: "Details" }} />
             <Text>Alarm: {itemInfo.get12HourTime()}, ID: {itemInfo.id}, Active: {itemInfo.active}, Repeats: {itemInfo.repeat.join()}</Text>
         </View>
 

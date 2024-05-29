@@ -5,9 +5,15 @@ import { Stack } from "expo-router";
 
 export default function AlarmsStack() {
     return (
-        <Stack>
+        <Stack screenOptions={{
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: "white",
+            },
+            headerStyle: globalStyles.barColor,
+            headerTintColor: '#fff',
+          }}>
             <Stack.Screen name="index" options={{
-                headerStyle: globalStyles.barColor,
                 title: "Alarms",
             }} />
         </Stack>
