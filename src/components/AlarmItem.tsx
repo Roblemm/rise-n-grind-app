@@ -5,15 +5,20 @@ import { AlarmClass } from '@/utils/AlarmClass';
 import { useState } from 'react';
 import Colors from '@/constants/Colors';
 
+import { useAlarmList } from "@/providers/AlarmListProvider";
+
+
 type AlarmItemProps = {
     alarm: AlarmClass;
 }
 
 export default function AlarmItem({ alarm }: AlarmItemProps) {
+    const { toggleItem } = useAlarmList();
     const [isEnabled, setIsEnabled] = useState(alarm.active);;
 
     const toggleSwitch = () => {
-        setIsEnabled(previousState => !previousState);
+        const active = toggleItem(alarm.id);
+        setIsEnabled(active);
         // Handle the toggle logic here, like updating the state in your backend or context
     };
 
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
     },
     alarmTextToggled: {
         textDecorationLine: "line-through",
-        color: Colors.light.tabIconDefault,
+        color: Colors.light.deselected,
     },
 
     alarmContainer: {

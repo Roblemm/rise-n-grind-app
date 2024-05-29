@@ -6,7 +6,6 @@ import { Link } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useAlarmList } from '@/providers/AlarmListProvider';
-import auth from "@react-native-firebase/auth";
 import db from '@react-native-firebase/database';
 import { useEffect } from 'react';
 import { useLogin } from '@/providers/LoginProvider';
@@ -17,7 +16,7 @@ import Colors from '@/constants/Colors';
 /*
 TODO:
 
-o Delete Alarm
+x Delete Alarm
 o Make Toggle Work
 o Edit Alarm
 o Add Splashscreen

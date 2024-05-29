@@ -6,18 +6,18 @@ type AlarmListType = {
     items: AlarmClass[],
     addItem: (item: AlarmClass) => void,
     setItemsList: (items: AlarmClass[]) => void,
-    // onRemoveItem: (id: string) => void,
+    removeItem: (id: string) => void,
     // onEditItem: (id: string) => void,
-    // onToggleItem: (id: string) => void,
+    toggleItem: (id: string) => boolean,
 }
 
 export const AlarmListContext = createContext<AlarmListType>({
     items: [],
     addItem: () => { },
     setItemsList: () => { },
-    // onRemoveItem: () => { },
+    removeItem: () => { },
     // onEditItem: () => { },
-    // onToggleItem: () => { },
+    toggleItem: () => { return true },
 });
 
 const AlarmListProvider = ({ children }: PropsWithChildren) => {
@@ -34,9 +34,27 @@ const AlarmListProvider = ({ children }: PropsWithChildren) => {
         setItems(items);
     };
 
+    const removeItem = (id: string) => {
+        console.log("Running remove item!");
+        setItems(items.filter(item => item.id!== id));
+    }
+
+    const toggleItem = (id: string) => {
+        console.log("Running toggle item!");
+        let active = true
+        setItems(items.map(item => {
+            if (item.id === id) {
+                item.active =!item.active;
+                active = item.active;
+            }
+            return item;
+        }));
+        return active
+    }
+
 
     return (
-        <AlarmListContext.Provider value={{ items, addItem, setItemsList }}>
+        <AlarmListContext.Provider value={{ items, addItem, setItemsList, removeItem, toggleItem }}>
             {children}
         </AlarmListContext.Provider>
     );
