@@ -9,7 +9,7 @@ export class AlarmClass {
     minute: number;
     repeat: RepeatDay[];
 
-    constructor(hour: number, minute: number, active: boolean = true, repeat: RepeatDay[] = ["None"]) {
+    constructor(hour: number, minute: number, active: boolean = true, repeat: RepeatDay[] = ["Sunday", "Saturday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",]) {
         let id = uuid.v4();
         if(typeof(id) !== 'string') {
             id = "00000000-0000-0000-0";
@@ -34,6 +34,18 @@ export class AlarmClass {
     }
 
     getAlarmRepeats() : string {
+        // Check if all days are selected
+        if(this.repeat.length === 7 && !this.repeat.includes("None")) {
+            return "Daily";
+        }
+
+        // Check if weekdays are selected
+        if(this.repeat.length === 5 && !this.repeat.includes("None") && !this.repeat.includes("Sunday") && !this.repeat.includes("Saturday")) {
+            return "Weekdays";
+        }
+
+        
+        
         let repeats = "";
         this.repeat.forEach(repeat => {
             repeats += AlarmClass.dayToShort(repeat) + ", ";
@@ -46,6 +58,8 @@ export class AlarmClass {
         switch(day) {
             case "Sunday":
                 return "Sun";
+            case "Saturday":
+                return "Sat";
             case "Monday":
                 return "Mon";
             case "Tuesday":
