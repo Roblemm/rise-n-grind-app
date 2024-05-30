@@ -18,7 +18,7 @@ TODO:
 
 x Delete Alarm
 x Make Toggle Work
-o Edit Alarm
+x Edit Alarm
 o Add Splashscreen
 
 o Add Alert on Phone when Alarm goes off & Toggle if One Time Alarm

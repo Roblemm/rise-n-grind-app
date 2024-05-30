@@ -44,33 +44,6 @@ export default function AlarmPage() {
         }
         // Reroute back to the main page
         router.back();
-
-        // try {
-        //     const user = getUser();
-
-        //     if (getLoggedIn() && user) {
-        //         // Get Index of Alarm
-        //         const index = items.findIndex((a) => { return a.id.toString() == id });
-
-
-        //         const ref = db().ref(`users/${user.uid}/alarms`);
-        //         const snapshot = await ref.once("value");
-        //         if (snapshot.exists()) {
-        //             // Remove Alarm
-        //             ref.child(index.toString()).remove();
-
-        //             if (alarm) {
-        //                 removeItem(alarm.id)
-        //             }
-
-        //             //Reroute back to the main page
-        //             router.back();
-        //         }
-
-        //     }
-        // } catch (e) {
-        //     console.log(e);
-        // }
     }
 
     const showTimePickerModal = () => {
