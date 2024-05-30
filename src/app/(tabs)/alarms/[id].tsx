@@ -4,16 +4,20 @@ import { useAlarmList } from "@/providers/AlarmListProvider";
 import { AlarmClass } from "@/utils/AlarmClass";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import Colors from '@/constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import db from '@react-native-firebase/database';
 import { useLogin } from '@/providers/LoginProvider';
+import { useState } from 'react';
 
 
 export default function AlarmPage() {
     const { id } = useLocalSearchParams();
-    const { items, removeItem } = useAlarmList();
+    const { items, removeItem, editItem } = useAlarmList();
     const { getLoggedIn, getUser } = useLogin();
+    const [showTimePicker, setShowTimePicker] = useState(false);
+
 
     if (!id) {
         return (
@@ -35,39 +39,73 @@ export default function AlarmPage() {
     }
 
     async function deleteAlarm() {
-        try {
-            const user = getUser();
-
-            if (getLoggedIn() && user) {
-                // Get Index of Alarm
-                const index = items.findIndex((a) => { return a.id.toString() == id });
-
-
-                const ref = db().ref(`users/${user.uid}/alarms`);
-                const snapshot = await ref.once("value");
-                if (snapshot.exists()) {
-                    // Remove Alarm
-                    ref.child(index.toString()).remove();
-                    
-                    if(alarm){
-                        removeItem(alarm.id)
-                    }
-
-                    //Reroute back to the main page
-                    router.back();
-                }
-
-            }
-        } catch (e) {
-            console.log(e);
+        if (alarm) {
+            removeItem(alarm.id);
         }
+        // Reroute back to the main page
+        router.back();
+
+        // try {
+        //     const user = getUser();
+
+        //     if (getLoggedIn() && user) {
+        //         // Get Index of Alarm
+        //         const index = items.findIndex((a) => { return a.id.toString() == id });
+
+
+        //         const ref = db().ref(`users/${user.uid}/alarms`);
+        //         const snapshot = await ref.once("value");
+        //         if (snapshot.exists()) {
+        //             // Remove Alarm
+        //             ref.child(index.toString()).remove();
+
+        //             if (alarm) {
+        //                 removeItem(alarm.id)
+        //             }
+
+        //             //Reroute back to the main page
+        //             router.back();
+        //         }
+
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
+
+    const showTimePickerModal = () => {
+        setShowTimePicker(true);
+    };
+
+    const hideTimePickerModal = () => {
+        setShowTimePicker(false);
+    };
+
+    const handleTimeChange = (event: any, selectedTime?: Date) => {
+        hideTimePickerModal();
+        if (selectedTime) {
+            // Update Alarm Time
+
+            editItem(alarm.id, {
+                hour: selectedTime.getHours(),
+                minute: selectedTime.getMinutes(),
+            })
+        }
+    };
+
+    const now = new Date();
 
     return (
         <View style={styles.expand}>
             <Stack.Screen options={{ title: "Edit Alarm" }} />
             <View style={styles.container}>
-                <Text style={styles.alarmText}>{alarm.get12HourTime()}</Text>
+                <View style={styles.clockContainer}>
+                    <Text style={styles.alarmText}>{alarm.get12HourTime()}</Text>
+                    <Pressable style={styles.editButton} onPress={showTimePickerModal}>
+                        <Feather name="edit-2" size={30} color="white" />
+                    </Pressable>
+                </View>
+
                 <Text style={styles.alarmRepeatsText}>{alarm.getAlarmRepeats()}</Text>
 
                 {/* Delete Button */}
@@ -76,6 +114,16 @@ export default function AlarmPage() {
                 </Pressable>
 
                 {/* Edit Time Button */}
+
+                {showTimePicker && (
+                    <DateTimePicker
+                        value={new Date(now.getFullYear(), now.getMonth(), now.getDate(), alarm.hour, alarm.minute, 0)}
+                        mode="time"
+                        display="spinner"
+                        onChange={handleTimeChange}
+                    />
+                )}
+
                 {/* Edit Repeats Button */}
             </View>
         </View>
@@ -87,6 +135,12 @@ export default function AlarmPage() {
 const styles = StyleSheet.create({
     expand: {
         flex: 1,
+    },
+    clockContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "transparent",
     },
     container: {
         flex: 1,
@@ -106,6 +160,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: Colors.light.background2,
         alignSelf: "center",
+        marginRight: 20,
     },
     deleteButton: {
         backgroundColor: "red",
@@ -119,5 +174,15 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         right: 0,
+    },
+    editButton: {
+        backgroundColor: Colors.light.foreground2,
+        borderRadius: 50 / 2,
+        borderColor: Colors.light.foreground,
+        borderWidth: 5,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });
