@@ -22,17 +22,17 @@ x Edit Alarm
 x Add Splashscreen
 
 o Add Alert on Phone when Alarm goes off & Toggle if One Time Alarm
-o Add Next Alarm in (time)
+~ Add Next Alarm in (time)
 
 
 
-o Clean up Add Alarm Page
+x Clean up Add Alarm Page
   o Add Selecting Ringtone
-  o Make Default Repeat Everyday
-  o Make Cases for if its Weekdays or Everyday
+  x Make Default Repeat Everyday
+  x Make Cases for if its Weekdays or Everyday
   o Add Repeats?
 
-Do something impressive.
+Do something cool.
 - Edit Volume from Phone
 - Add Missions
 - Add Journal
@@ -78,6 +78,11 @@ export default function AlarmsScreen() {
 
   return (
     <View style={styles.container}>
+      {/* {
+        items.length !== 0 &&
+        <Text style={styles.nextAlarmInText}>Next Alarm in {AlarmClass.timeUntilNextAlarm(items)}</Text>
+      } */}
+
       <FlatList style={[styles.container, styles.alarmList]}
         data={items}
         renderItem={({ item }) => {
@@ -96,6 +101,10 @@ export default function AlarmsScreen() {
 }
 
 const styles = StyleSheet.create({
+  nextAlarmInText: {
+
+  },
+
   container: {
     flex: 1,
   },

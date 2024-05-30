@@ -110,4 +110,28 @@ export class AlarmClass {
         });
         return alarms;
     }
+
+    static timeUntilNextAlarm(alarms: AlarmClass[]): string {
+        const now = new Date();
+        let nextAlarm = new Date(3000, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+        alarms.forEach(alarm => {
+            let alarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), alarm.hour, alarm.minute, now.getSeconds(), now.getMilliseconds());
+            if(alarmTime < nextAlarm) {
+                nextAlarm = alarmTime;
+            }
+        });
+
+        let diff = nextAlarm.getTime() - now.getTime();
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+        let minutes = Math.floor(diff / (1000 * 60));
+
+        if(hours > 0) {
+            return "in " + hours + " hours and " + minutes + " minutes";
+        } else if(minutes > 0) {
+            return "in " + minutes + " minutes";
+        } else {
+            return "in less than a minute";
+        }
+    }
 }
