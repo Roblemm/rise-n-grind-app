@@ -49,8 +49,14 @@ const LoginProvider = ({ children }: PropsWithChildren) => {
                     alarms: AlarmClass.convertAlarmsToJSON(items),
                 });
             } else {
-                console.log(AlarmClass.convertAlarmsFromJSON(snapshot.val().alarms));
-                setItemsList(AlarmClass.convertAlarmsFromJSON(snapshot.val().alarms));
+                if (snapshot.val().alarms) {
+                    console.log(AlarmClass.convertAlarmsFromJSON(snapshot.val().alarms));
+                    setItemsList(AlarmClass.convertAlarmsFromJSON(snapshot.val().alarms));
+                } else {
+                    userRef.update({
+                        alarms: AlarmClass.convertAlarmsToJSON(items),
+                    });
+                }
             }
 
         } catch (e) {
@@ -61,7 +67,7 @@ const LoginProvider = ({ children }: PropsWithChildren) => {
     login();
 
     return (
-        <LoginContext.Provider value={{getLoggedIn, getUser}}>
+        <LoginContext.Provider value={{ getLoggedIn, getUser }}>
             {children}
         </LoginContext.Provider>
     );
