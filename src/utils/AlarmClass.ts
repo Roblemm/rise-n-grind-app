@@ -44,6 +44,10 @@ export class AlarmClass {
             return "Weekdays";
         }
 
+        // Check if weekends are selected
+        if(this.repeat.length === 2 && !this.repeat.includes("None") && !this.repeat.includes("Sunday") && !this.repeat.includes("Saturday")) {
+            return "Weekends";
+        }
         
         
         let repeats = "";
